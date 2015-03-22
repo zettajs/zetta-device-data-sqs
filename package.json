@@ -1,6 +1,6 @@
 {
   "name": "zetta-device-data-sqs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Send all device data streams to AWS SQS",
   "main": "collection-sqs.js",
   "directories": {
