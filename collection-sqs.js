@@ -10,17 +10,23 @@ var SqsCollector = module.exports = function(options) {
   StatsCollector.call(this);
   options = options || {};
 
-  AWS.config.update({ accessKeyId: options.accessKeyId,
-                      secretAccessKey: options.secretAccessKey,
-                      region: options.region || 'us-east-1'
-                    });
-  
   if (!options.queueUrl) {
     throw new Error('Must supply queueUrl');
   }
 
   this.queueUrl = options.queueUrl;
-  this.sqs = new AWS.SQS();
+  
+  var config = {
+    region: options.region || 'us-east-1'
+  };
+
+  Object.keys(options).forEach(function(k) {
+    config[k] = options[k];
+  });
+  delete config.queueUrl;
+  delete config.windowMs;
+
+  this.sqs = new AWS.SQS(config);
   
   var windowMs = options.windowMs || 30000;
   
