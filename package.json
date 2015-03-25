@@ -1,6 +1,6 @@
 {
   "name": "zetta-device-data-sqs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Send all device data streams to AWS SQS",
   "main": "collection-sqs.js",
   "directories": {
@@ -18,6 +18,6 @@
   "dependencies": {
     "aws-sdk": "^2.1.18",
     "rx": "^2.3.25",
-    "zetta-device-data-collection": "^0.4.0"
+    "zetta-device-data-collection": "^0.5.0"
   }
 }
