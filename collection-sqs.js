@@ -43,24 +43,26 @@ var SqsCollector = module.exports = function(options) {
           var len = new Buffer(JSON.stringify(x)).length;
           if (len > MAX_SIZE) {
             return;
-          } else if (currentSize + len > MAX_SIZE) {
+          } else if (currentSize + len + 1 > MAX_SIZE - 2 ) {
             idx++;
-            currentSize = 0;
+            currentSize = len;
             groups[idx] = [x];
           } else {
             groups[idx].push(x);
             currentSize += len;
+            if (groups[idx].length > 1) {
+              currentSize += 1;
+            }
           }
         } catch (err) {
         }
       });
 
-      groups.forEach(function(group) {
+      groups.forEach(function(group, i) {
         var params = {
           MessageBody: JSON.stringify(group),
           QueueUrl: self.queueUrl
         };
-
         self.sqs.sendMessage(params, function(err, data) {
           if (err) {
             self.server.error('Failed to send stats to sqs, ' + err);
