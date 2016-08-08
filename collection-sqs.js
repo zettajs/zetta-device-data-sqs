@@ -30,7 +30,7 @@ var SqsCollector = module.exports = function(options) {
   
   var windowMs = options.windowMs || 30000;
   
-  Rx.Observable.fromEvent(this.emitter, 'event')
+  Rx.Observable.fromEvent(this, 'event')
     .window(function() { return Rx.Observable.timer(windowMs); })
     .flatMap(function(e) { return e.toArray(); })
     .filter(function(arr) { return arr.length > 0 })
@@ -72,11 +72,4 @@ var SqsCollector = module.exports = function(options) {
     });
 };
 util.inherits(SqsCollector, StatsCollector);
-
-
-
-
-
-
-
 
